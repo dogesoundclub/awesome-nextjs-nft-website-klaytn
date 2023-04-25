@@ -6,7 +6,6 @@ export default function Document() {
       <Head>
         <meta charSet="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta name="description" content="도지사운드클럽은 NFT를 수집하는 유쾌한 사람들의 모임입니다. 한국 최초이자 클레이튼 최초로 발행된 제너레이티브 NFT인 메이트를 수집하는 것을 시작으로 2021년 7월에 탄생하였습니다."/>
         <meta name="keywords" content="DogeSoundClub, DSC, PFP, NFT, Mates, Emates, BMCS, Mix"/>
         <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png"/>
         <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png"/>

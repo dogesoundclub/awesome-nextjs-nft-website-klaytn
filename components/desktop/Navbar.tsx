@@ -18,7 +18,7 @@ export default function Navbar(){
         <>
         <nav>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "10vh", padding: "10px", background: "linear-gradient(180deg,#646464 30%,#ffffff88 50%,#646464 70%)" }}>
-                <Link href="/"><img src="/logo.png" alt="dogesoundclub_logo" style={{ height: "10vh" }}/></Link>
+                <Link href="/"><img src="/logo.webp" alt="dogesoundclub_logo" style={{ height: "10vh" }}/></Link>
                 <div style={{ width: "50%"}}>
                     <ul style={{ display: "flex", justifyContent: "flex-end", listStyle: "none", fontSize: "20px", fontFamily: "Audiowide", fontWeight: "bold" }}>
                         {navigation.map((item) => (
