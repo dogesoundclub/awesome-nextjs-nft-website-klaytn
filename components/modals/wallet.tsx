@@ -7,6 +7,7 @@ export default function WalletPage() {
     if (!WalletStore.view) return <></>;
 
     const kaikas = async () => { await kaikasConnect(true); }
+    const klip = async () => { }
 
     return (
         <>
@@ -33,13 +34,13 @@ export default function WalletPage() {
             </div>
             <div className="window-body">
               <section className="field-row" style={{ justifyContent: "center" }}>
-                <button style={{ color: "#000000" }} onClick={ kaikas }>Connect to Kaikas</button>
+                <button style={{ color: "#000000", width: "50%" }} onClick={ kaikas }>Connect to Kaikas</button>
               </section>
               <section className="field-row" style={{ justifyContent: "center" }}>
-                <button style={{ color: "#000000" }}>Connect to Klip</button>
+                <button style={{ color: "#000000", width: "50%" }} onClick={ klip }>Connect to Klip</button>
               </section>
               <section className="field-row" style={{ justifyContent: "center" }}>
-                <button style={{ color: "#000000" }} onClick={ WalletClose }>Don&apos;t Connect</button>
+                <button style={{ color: "#000000", width: "50%" }} onClick={ WalletClose }>Don&apos;t Connect</button>
               </section>
             </div>
           </div>
