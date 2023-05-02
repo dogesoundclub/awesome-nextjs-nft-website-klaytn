@@ -18,7 +18,7 @@ export default function Left() {
             </div>
             <div style={{ display: "flex", padding: "5px" }}>
                 <Image 
-                    src="/desktop/layout/left/LeftBanner.png"
+                    src="/desktop/layout/left/LeftBanner.webp"
                     alt=""
                     width="793"
                     height="934"
@@ -27,7 +27,7 @@ export default function Left() {
             <div style={{ textAlign: "center", padding: "5px" }}>
                 <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
                     <Image 
-                        src="/desktop/layout/left/CC_BY-SA_icon.png"
+                        src="/desktop/layout/left/CC_BY-SA_icon.webp"
                         alt=""
                         width="100"
                         height="35"

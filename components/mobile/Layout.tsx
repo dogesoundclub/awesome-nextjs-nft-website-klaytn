@@ -1,3 +1,7 @@
+import Logo from "./Logo";
+import Banner from "./Banner";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 import WidgetBotCrate from "@/components/discord/widgetbot";
 
 type LayoutProps = {
@@ -6,7 +10,13 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps){
     return (
       <>
-        {children}
+        <div style={{ background: "#D9D9D9", color: "#000" }}>
+          <Logo/>
+          <Banner/>
+          <Navbar/>
+          {children}
+          <Footer/>
+        </div>
         <WidgetBotCrate server="872113947166249041" channel="1056835060113866752" />
       </>
     );

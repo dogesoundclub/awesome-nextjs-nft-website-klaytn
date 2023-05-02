@@ -6,6 +6,7 @@ import { getHederaMsg, getKlaytnMsg } from "@/services/discord";
 import { verifyStore } from "@/stores/verify.store";
 import { walletStore } from "@/stores/wallet.store";
 import VerifyPage from "@/components/modals/verify";
+import WalletPage from "@/components/modals/wallet";
 
 export default function Activities() {
     const [klaytnAddress, setKlaytnAddress] = useState(true);
@@ -39,6 +40,7 @@ export default function Activities() {
     return (
         <Layout>
             <VerifyPage />
+            <WalletPage />
             <div style={{ display: "flex", alignItems: "flex-end", height: "5vh", padding: "0 20px" }}>
                 <div>
                     <span style={{ color: "#36B167", textDecoration: "underline", fontSize: "30px", marginRight: "10px" }}>ACTIVITIES</span>
@@ -53,9 +55,24 @@ export default function Activities() {
                 </div>
             </div>
             <div style={{ display: "flex", height: "40vh" }}>
-                <img src="/desktop/activities/holder_certification.webp" alt="" style={{ width: "60%" }} />
-                <img src="/desktop/activities/holder_certification_klaytn.webp" alt="" style={{ width: "20%" }} onClick={() => (klaytnAddress ? WalletShow :location.href = identityURL("klaytn"))}/>
-                <img src="/desktop/activities/holder_certification_hedera.webp" alt="" style={{ width: "20%" }} onClick={() => (location.href = identityURL("hedera"))}/>
+                <img
+                    src="/desktop/activities/holder_certification.webp"
+                    alt=""
+                    style={{ width: "60%" }}
+                />
+                <img 
+                    src="/desktop/activities/holder_certification_klaytn.webp"
+                    alt=""
+                    style={{ width: "20%" }}
+                    onClick={() => (klaytnAddress ? WalletShow() : location.href = identityURL("klaytn"))}
+                />
+                <img 
+                    src="/desktop/activities/holder_certification_hedera.webp" 
+                    alt="" 
+                    style={{ width: "20%" }} 
+                    // onClick={() => (location.href = identityURL("hedera"))}
+                    onClick={() => alert("헤데라 체인 인증은 모바일 월립토만 지원합니다.")}
+                />
             </div>
             <div style={{ display: "flex", height: "20vh" }}>
                 <img id="banner2" src="/desktop/activities/banner2.webp" alt="" style={{ width: "50%" }} />
@@ -66,27 +83,27 @@ export default function Activities() {
                 <img id="banner5" src="/desktop/activities/banner5.webp" alt="" style={{ width: "50%" }} />
             </div>
             <style jsx>{`
-            @keyframes welcome {
-                from {
-                    transform: translateX(300%);
-                }
+                @keyframes welcome {
+                    from {
+                        transform: translateX(300%);
+                    }
 
-                to {
-                    transform: translateX(-100%);
+                    to {
+                        transform: translateX(-100%);
+                    }
                 }
-            }
-            #banner2:hover {
-                content: url('/desktop/activities/banner2_hover.webp');
-            }
-            #banner3:hover {
-                content: url('/desktop/activities/banner3_hover.webp');
-            }
-            #banner4:hover {
-                content: url('/desktop/activities/banner4_hover.webp');
-            }
-            #banner5:hover {
-                content: url('/desktop/activities/banner5_hover.webp');
-            }
+                #banner2:hover {
+                    content: url('/desktop/activities/banner2_hover.webp');
+                }
+                #banner3:hover {
+                    content: url('/desktop/activities/banner3_hover.webp');
+                }
+                #banner4:hover {
+                    content: url('/desktop/activities/banner4_hover.webp');
+                }
+                #banner5:hover {
+                    content: url('/desktop/activities/banner5_hover.webp');
+                }
             `}</style>
         </Layout>
     );
