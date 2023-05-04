@@ -2,6 +2,7 @@ import Logo from "./Logo";
 import Banner from "./Banner";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import SocialPage from "@/components/modals/social";
 import WidgetBotCrate from "@/components/discord/widgetbot";
 
 type LayoutProps = {
@@ -14,6 +15,7 @@ export default function Layout({ children }: LayoutProps){
           <Logo/>
           <Banner/>
           <Navbar/>
+          <SocialPage/>
           {children}
           <Footer/>
         </div>

@@ -32,23 +32,23 @@ export default function VerifyPage() {
             {hook.result === "success" ? (
               hook.network === "klaytn" ? (
                 <img
-                  src="/desktop/activities/certification/klaytnsuccess.png"
+                  src="/desktop/activities/certification/klaytnsuccess.webp"
                   style={{ width: "32px" }}
                 />
               ) : (
                 <img
-                  src="/desktop/activities/certification/hederasuccess.png"
+                  src="/desktop/activities/certification/hederasuccess.webp"
                   style={{ width: "32px" }}
                 />
               )
             ) : hook.result === "fail" && hook.network === "klaytn" ? (
               <img
-                src="/desktop/activities/certification/klaytnfail.png"
+                src="/desktop/activities/certification/klaytnfail.webp"
                 style={{ width: "32px" }}
               />
             ) : (
               <img
-                src="/desktop/activities/certification/hederafail.png"
+                src="/desktop/activities/certification/hederafail.webp"
                 style={{ width: "32px" }}
               />
             )}

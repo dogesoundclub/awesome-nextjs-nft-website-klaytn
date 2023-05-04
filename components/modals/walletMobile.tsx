@@ -1,4 +1,4 @@
-import { useCallback, useState, useRef } from "react";
+import { useCallback } from "react";
 import { walletStore } from "@/stores/wallet.store";
 import { kaikasConnect } from "@/components/wallet/kaikas";
 

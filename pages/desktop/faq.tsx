@@ -38,15 +38,6 @@ export default function Faq() {
                     </div>
                     <div style={{ display: "flex", paddingTop: "20px" }}>
                         <div>
-                            <img src="/desktop/faq/qna4.webp" alt="" style={{ width: "50px" }} />
-                        </div>
-                        <div style={{ display: "flex", flexDirection: "column", paddingLeft: "10px" }}>
-                            <span style={{ fontSize: "25px" }}>What is DogeSoundClub?</span>
-                            <span style={{ color: "#777777", fontSize: "19px" }}>DogeSoundClub (DSC) is the first online PFP NFT project based in South Korea, based on the Klaytn blockchain.</span>
-                        </div>
-                    </div>
-                    <div style={{ display: "flex", paddingTop: "20px" }}>
-                        <div>
                             <img src="/desktop/faq/qna5.webp" alt="" style={{ width: "50px" }} />
                         </div>
                         <div style={{ display: "flex", flexDirection: "column", paddingLeft: "10px" }}>

@@ -24,6 +24,13 @@ export default function Left() {
                     height="934"
                 />
             </div>
+            <div style={{ display: "flex", padding: "5px" }}>
+                <img 
+                    src="/desktop/layout/left/license.webp"
+                    alt=""
+                    width="100%"
+                />
+            </div>
             <div style={{ textAlign: "center", padding: "5px" }}>
                 <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
                     <Image 
@@ -35,7 +42,7 @@ export default function Left() {
                 </a>
             </div>
             <div style={{ textAlign: "center", fontFamily: "Audiowide", color: "#656565", padding: "5px" }}>
-                <p>DSC LABEL inc.</p>
+                <p>© Doge Sound Club</p>
                 <p>support@dsclabel.co.kr</p>
             </div>
         </div>

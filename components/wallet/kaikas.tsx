@@ -14,6 +14,7 @@ export async function kaikasConnect(isMobile:boolean) {
     } else {      
         if(isMobile) { 
             //구글 플레이 스토어 링크
+            window.open("https://app.kaikas.io/u/dogesound.club");
         } else {
             alert("Please install Kaikas wallet"); window.open("https://chrome.google.com/webstore/detail/kaikas/jblndlipeogpafnldhgmapagcccfchpi");
         }

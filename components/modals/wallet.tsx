@@ -10,7 +10,7 @@ export default function WalletPage() {
     const [popupKlip, setPopupKlip] = useState(false);
     const WalletStore = walletStore();
     const WalletClose = () => { WalletStore.setView(false); }
-    const kaikas = async () => { await kaikasConnect(true); }
+    const kaikas = async () => { await kaikasConnect(false); }
     const klipClose = () => { setPopupKlip(false); }
 
     const klip = useCallback(() => {
