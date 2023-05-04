@@ -24,12 +24,15 @@ export default function Left() {
                     height="934"
                 />
             </div>
-            <div style={{ display: "flex", padding: "5px" }}>
+            {/* <div style={{ display: "flex", padding: "5px" }}>
                 <img 
                     src="/desktop/layout/left/license.webp"
                     alt=""
                     width="100%"
                 />
+            </div> */}
+            <div style={{ textAlign: "center", fontFamily: "Audiowide", color: "#fff", background: "#65656580", padding: "5px" }}>
+                <p>Unless otherwise stated, the content of this page is licensed under Creative Contents Attribution-Share Alike 4.0 International License</p>
             </div>
             <div style={{ textAlign: "center", padding: "5px" }}>
                 <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">

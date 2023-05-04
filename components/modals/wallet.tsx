@@ -64,6 +64,11 @@ export default function WalletPage() {
             <section className="field-row" style={{ justifyContent: "center" }}>
               <img src={data}/>
             </section>
+            <section className="field-row" style={{ justifyContent: "center", fontSize: "10px" }}>
+            QR 코드 리더기 또는 카카오톡 앱을 통해 QR 코드를 스캔해주세요.<br/>
+            카카오톡 실행 ▶ 상단 검색창 클릭 ▶ 코드 스캔 후 로그인<br/>
+            * Klip &gt; 코드스캔 (사이드메뉴)에서도 스캔이 가능합니다.<br/>
+            </section>
             {/* <section className="field-row" style={{ justifyContent: "center" }}>
               남은 시간: { Math.floor((time%3600)/60) }분 { time%60 }초
             </section> */}
