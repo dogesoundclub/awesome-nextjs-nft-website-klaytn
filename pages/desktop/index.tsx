@@ -2,7 +2,7 @@ export default function Index() {
 
     return (
         <>
-        <div style={{ background: "url('/desktop/index/main.webp')", textAlign: "center", backgroundSize: "contain", display: "flex", alignItems: "center", height: "100vh" }}></div>
+        <div style={{ background: "url('/desktop/index/main.webp') 100%", textAlign: "center", backgroundSize: "cover", display: "flex", alignItems: "center", height: "100vh" }}></div>
         <div
             style={{
                 position: "fixed",
