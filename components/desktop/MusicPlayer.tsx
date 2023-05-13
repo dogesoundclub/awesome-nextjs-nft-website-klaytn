@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { useMusicPlayerState, useMusicPlayerDispatch } from 'context/MusicPlayerContext';
+import { useMusicPlayerState, useMusicPlayerDispatch } from '../../context/MusicPlayerContext';
 
-const MusicPlayer = ({ children }: MusicPlayerProps) => {
+const MusicPlayer = ({ children }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { isPlaying, progress } = useMusicPlayerState();
   const dispatch = useMusicPlayerDispatch();
@@ -56,7 +56,7 @@ const MusicPlayer = ({ children }: MusicPlayerProps) => {
 
   return (
     <div id="wrapper_ea" tabIndex={0} style={{position: 'fixed', width: '100%', zIndex: 1000}}>
-      {children}
+
       <audio ref={audioRef} id="mytrack" src="https://d1490khl9dq1ow.cloudfront.net/music/mp3preview/rising-up_MkRGmUBO.mp3" type="audio/mpeg">
         <strong>Your browser does not support the audio element.</strong>
       </audio>
@@ -229,6 +229,7 @@ const MusicPlayer = ({ children }: MusicPlayerProps) => {
           padding-left: 10px;
       }
       `}</style>
+            {children}
     </div>
   );
 };

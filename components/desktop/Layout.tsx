@@ -11,7 +11,8 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps){
   return (
     <div>
-      <Navbar style={{ top: '300px', position: "relative" }}/>
+
+      <Navbar/>
       <div style={{ display: "flex", height: "90vh", background: "#fff", color: "#000"}}>
         <div style={{ width: "15%", background: "#C1C1C1", height: "90vh" }}>
           <Left/>
@@ -24,6 +25,8 @@ export default function Layout({ children }: LayoutProps){
         </div>
       </div>
       <WidgetBotCrate server="872113947166249041" channel="1056835060113866752" />
+
     </div>
+
   );
 }
