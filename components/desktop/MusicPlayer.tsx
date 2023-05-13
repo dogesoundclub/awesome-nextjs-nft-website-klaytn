@@ -20,11 +20,19 @@ const MusicPlayer = ({ children }: MusicPlayerProps) => {
 
   useEffect(() => {
     if (isPlaying && audioRef.current) {
-      audioRef.current.play();
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.then(_ => {
+          // Automatic playback started!
+        }).catch(error => {
+          // Auto-play was prevented
+          dispatch({ type: 'PAUSE' });
+        });
+      }
     } else if (!isPlaying && audioRef.current) {
       audioRef.current.pause();
     }
-  }, [isPlaying]);
+  }, [isPlaying, dispatch]);
 
   const toggleMute = () => {
     if (audioRef.current) {
@@ -258,7 +266,6 @@ const MusicPlayer = ({ children }: MusicPlayerProps) => {
       #songInfo p {
         margin: 0;
       }
-
       `}</style>
             {children}
     </div>
