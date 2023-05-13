@@ -36,7 +36,7 @@ export default function Gallery() {
     }
   };
 
-  const applyFilter = (mates: any[], filters) => {
+  const applyFilter = (mates: any[], filters: { [key: string]: string }) => {
     const filteredMates = mates.filter((mate: any) => {
       for (const [key, value] of Object.entries(filters)) {
         if (value === key) continue; 
