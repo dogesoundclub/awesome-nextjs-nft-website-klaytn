@@ -6,7 +6,7 @@ import useInfiniteScrolling from "../../hooks/useInfiniteScrolling";
 export default function Gallery() {
   const [boxList, setBoxList] = useState<number[]>([]);
   const [allMates, setAllMates] = useState<number[]>([]);
-  const observerRef = useRef<HTMLDivElement>(null);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null); // 이 부분을 수정했습니다.
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
   const [mateParts, setMateParts] = useState<{ key: string; value: string[] }[]>([]);
 
@@ -57,7 +57,7 @@ export default function Gallery() {
   };
 
   useInfiniteScrolling({
-    observerRef: observerRef.current,
+    target: loadMoreRef, // 이 부분을 수정했습니다.
     fetchMore: fetchBoxList,
     hasMore: boxList.length < allMates.length,
   });
@@ -112,7 +112,7 @@ export default function Gallery() {
                     container: (base) => ({
                       ...base,
                       backgroundColor: "#e73c83",
-                      padding: 6,
+                      padding: 3,
                     }),
                     control: (base) => ({
                       ...base,
@@ -146,13 +146,23 @@ export default function Gallery() {
           <div style={{ display: "flex", height: "30vh" }}>
             <img src="/desktop/faq/pray_for_dsc.webp" alt="" style={{ width: "100%" }}/>
           </div>
-          <div id="galleryContents" style={{ overflow:"scroll", height: "60vh", display: "flex", flexWrap: "wrap" }}>
+          <div id="galleryContents" style={{ 
+              overflow:"scroll", 
+              height: "60vh", 
+              display: "flex", 
+              flexWrap: "wrap", 
+              justifyContent: "center",  
+              backgroundColor: "#f7d602"  // 이 부분을 추가하세요.
+          }}>
             {boxList.map(box => (
-    <li key={box} className="box" style={{ flexDirection: "column", width: "16.6666%" }}>
-        <img src={"https://storage.googleapis.com/dsc-mate/336/dscMate-"+box+".png"} alt="" style={{ width: "100px", borderRadius: "10px" }}  ref={observerRef}/>
-        <span style={{ fontSize: "15px" }}>MATE #{box}</span>
-    </li>
-  ))}
+              <li key={box} className="box" style={{ flexDirection: "column"}}>
+                <a href={`https://opensea.io/assets/klaytn/0xe47e90c58f8336a2f24bcd9bcb530e2e02e1e8ae/${box}`} target="_blank" rel="noopener noreferrer">
+                  <img src={`https://storage.googleapis.com/dsc-mate/336/dscMate-${box}.png`} alt="" style={{ width: "100px"}}/>
+                </a>
+                {/* <span style={{ fontSize: "15px" }}>MATE #{box}</span> */}
+              </li>
+            ))}
+            <div ref={loadMoreRef} /> {/* This is the loading trigger */}
           </div>
         </div>
       </div>
@@ -169,7 +179,7 @@ export default function Gallery() {
         }
 
         .box {
-            margin-top: 20px;
+            margin-top: -0.4%;
             display: flex;
             justify-content: center;
             align-items: center;
