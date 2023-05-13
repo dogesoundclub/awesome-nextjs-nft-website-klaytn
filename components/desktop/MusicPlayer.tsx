@@ -41,20 +41,6 @@ const MusicPlayer = ({ children }: MusicPlayerProps) => {
   };
 
   useEffect(() => {
-    dispatch({ type: 'PLAY' });
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.play();
-      } else {
-        audioRef.current.pause();
-      }
-    }
-  }, [isPlaying]);
-
-  useEffect(() => {
     console.log("am i operating?")
     const interval = setInterval(() => {
       if (audioRef.current) {
@@ -72,7 +58,6 @@ const MusicPlayer = ({ children }: MusicPlayerProps) => {
         ref={audioRef} 
         id="mytrack" 
         src='/audio/03_Lil_9ap,_nowimyoung,_SUDO_BEAM_!_BEAM_!_Mastered.mp3'
-        onCanPlay={() => dispatch({ type: 'PLAY' })}
         onLoadedMetadata={() => {
           if (audioRef.current) {
             const newProgress = audioRef.current.currentTime / audioRef.current.duration;
