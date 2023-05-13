@@ -1,7 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { ReactNode, useEffect, useRef } from 'react';
 import { useMusicPlayerState, useMusicPlayerDispatch } from '../../context/MusicPlayerContext';
 
-const MusicPlayer = ({ children }) => {
+interface MusicPlayerProps {
+  children: ReactNode;
+}
+
+const MusicPlayer = ({ children }: MusicPlayerProps) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { isPlaying, progress } = useMusicPlayerState();
   const dispatch = useMusicPlayerDispatch();
@@ -29,6 +33,10 @@ const MusicPlayer = ({ children }) => {
   };
 
   useEffect(() => {
+    dispatch({ type: 'PLAY' });
+  }, [dispatch]);
+
+  useEffect(() => {
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.play();
@@ -38,26 +46,32 @@ const MusicPlayer = ({ children }) => {
     }
   }, [isPlaying]);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (audioRef.current) {
-  //       const newProgress = audioRef.current.currentTime / audioRef.current.duration;
-  //       setProgress(isNaN(newProgress) ? 0 : newProgress);
-  //     }
-  //   }, 1000);
-
-  //   return () => clearInterval(interval);
-  // }, []);
-
-  // This effect runs when the component mounts
   useEffect(() => {
-    console.log('<MusicPlayer> has been loaded');
+    console.log("am i operating?")
+    const interval = setInterval(() => {
+      if (audioRef.current) {
+        const newProgress = audioRef.current.currentTime / audioRef.current.duration;
+        dispatch({ type: 'SET_PROGRESS', payload: isNaN(newProgress) ? 0 : newProgress });
+      }
+    }, 1000);
+  
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <div id="wrapper_ea" tabIndex={0} style={{position: 'fixed', width: '100%', zIndex: 1000}}>
-
-      <audio ref={audioRef} id="mytrack" src="https://d1490khl9dq1ow.cloudfront.net/music/mp3preview/rising-up_MkRGmUBO.mp3" type="audio/mpeg">
+      <audio 
+        ref={audioRef} 
+        id="mytrack" 
+        src='/audio/03_Lil_9ap,_nowimyoung,_SUDO_BEAM_!_BEAM_!_Mastered.mp3'
+        onCanPlay={() => dispatch({ type: 'PLAY' })}
+        onLoadedMetadata={() => {
+          if (audioRef.current) {
+            const newProgress = audioRef.current.currentTime / audioRef.current.duration;
+            dispatch({ type: 'SET_PROGRESS', payload: isNaN(newProgress) ? 0 : newProgress });
+          }
+        }}
+      >
         <strong>Your browser does not support the audio element.</strong>
       </audio>
       <nav id="navbar_ea" dir="ltr" tabIndex={-1} role="tabpanel">
@@ -65,16 +79,12 @@ const MusicPlayer = ({ children }) => {
           <div id="progressBar" role="application" tabIndex={-1} style={{ width: `${progress * 100}%` }} />
         </div>
         <div id="buttons" role="tabpanel" tabIndex={0}>
-          <div className="bar_start" aria-controls="buttons" role="tabpanel">
-            <div className="button_before_time">
-              <button type="button" id="playButton" aria-label="Play/pause" tabIndex={0} role="button" onClick={togglePlay}></button>
-              <button type="button" id="muteButton" aria-label="mute/unmute" tabIndex={0} role="button" onClick={toggleMute}></button>
-            </div>
-            <div className="time-audio" role="timer">
-              <span id="currentTime" aria-current="time" role="timer">0:00</span>
-              <span id="time-audio" role="timer">/</span>
-              <span id="fullDuration" aria-current="time" role="timer">0:00</span>
-            </div>
+          <button type="button" id="playButton" aria-label="Play/pause" tabIndex={0} role="button" onClick={togglePlay}></button>
+          <button type="button" id="muteButton" aria-label="mute/unmute" tabIndex={0} role="button" onClick={toggleMute}></button>
+          <div id="songInfo">
+          <a href="https://www.youtube.com/watch?v=pSqzpokGoug" target="_blank" rel="noopener noreferrer" style={{color: 'blue', textDecoration: 'underline'}}>
+              <p>Lil 9ap x NOWIMYOUNG x SUDO - BEAM!</p>
+            </a>
           </div>
         </div>
       </nav>
@@ -126,8 +136,18 @@ const MusicPlayer = ({ children }) => {
           width: 0px;
       }
 
-      #muteButton,
+      #muteButton {
+        border: none;
+        height: calc(var(--height-button)*1px);
+        width: calc(var(--width-button)*1px);
+        background-color: var(--color-buttons-background);
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-left: 5px; /* 이 줄을 추가하세요. 원하는 간격으로 조정하세요. */
+     }
+
       #fullscreennormal,
+
       #playButton {
           border: none;
           height: calc(var(--height-button)*1px);
@@ -228,6 +248,17 @@ const MusicPlayer = ({ children }) => {
           align-items: center;
           padding-left: 10px;
       }
+      #songInfo {
+        margin-left: 10px; /* 간격을 원하는대로 조정하세요. */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color : black;
+      }
+      #songInfo p {
+        margin: 0;
+      }
+
       `}</style>
             {children}
     </div>

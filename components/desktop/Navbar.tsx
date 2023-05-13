@@ -1,3 +1,4 @@
+// Navbar.tsx:
 import Link from 'next/link'
 import { useRouter } from "next/router";
 
@@ -23,7 +24,7 @@ export default function Navbar(){
                     <ul style={{ display: "flex", justifyContent: "flex-end", listStyle: "none", fontSize: "20px", fontFamily: "Audiowide", fontWeight: "bold" }}>
                         {navigation.map((item) => (
                             <li key={item.name} style={{ padding: "10px", textShadow: "-1px 1px #000, 1px 1px #000, 1px 1px #000, 1px -1px #000" }}>
-                                 <a href={item.href}>{item.name}</a>
+                                <Link href={item.href}>{item.name}</Link>
                             </li>
                         ))}
                     </ul>

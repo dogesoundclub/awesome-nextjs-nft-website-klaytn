@@ -11,7 +11,6 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps){
   return (
     <div>
-
       <Navbar/>
       <div style={{ display: "flex", height: "90vh", background: "#fff", color: "#000"}}>
         <div style={{ width: "15%", background: "#C1C1C1", height: "90vh" }}>

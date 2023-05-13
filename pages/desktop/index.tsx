@@ -1,5 +1,6 @@
-export default function Index() {
+import Link from 'next/link'
 
+export default function Index() {
     return (
         <>
         <div style={{ background: "url('/desktop/index/main.webp') 100%", textAlign: "center", backgroundSize: "cover", display: "flex", alignItems: "center", height: "100vh" }}></div>
@@ -30,7 +31,7 @@ export default function Index() {
                     <section className="field-row" style={{ flexDirection: "column", justifyContent: "center", color: "#000", width: "100%", margin: "0px" }}>
                         <p style={{ fontSize: "16px", fontWeight: "bold" }}>Welcome to the</p>
                         <p style={{ fontSize: "16px", fontWeight: "bold", margin: "0 0 10px 0" }}>Doge Sound Club!</p>
-                        <button style={{ color: "#000000", margin: "0" }} onClick={() => (location.href = "/about")}>enter</button>
+                        <Link href="/about"><button style={{ color: "#000000", margin: "0" }}>enter</button></Link>
                     </section>
                 </section>
                 </div>

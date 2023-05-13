@@ -1,16 +1,16 @@
-// _app.tsx:
 import "xp.css/dist/XP.css";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { NextSeo } from "next-seo";
 import MusicPlayer from '../components/desktop/MusicPlayer';
 import { MusicPlayerProvider } from '../context/MusicPlayerContext';
+import useMediaQuery from '../hooks/useMediaQuery';
 
 export default function App({ Component, pageProps }: AppProps) {
+  const isDesktop = useMediaQuery('(min-width: 768px)');  // change the value as you need
+
   return (
     <>
-      <MusicPlayerProvider>
-        <MusicPlayer>
         <NextSeo 
           title="DogeSoundClub - NFT를 수집하는 유쾌한 사람들의 모임"
           description="도지사운드클럽은 NFT를 수집하는 유쾌한 사람들의 모임입니다. 한국 최초이자 클레이튼 최초로 발행된 제너레이티브 NFT인 메이트를 수집하는 것을 시작으로 2021년 7월에 탄생하였습니다."
@@ -27,9 +27,16 @@ export default function App({ Component, pageProps }: AppProps) {
             cardType: 'summary_large_image',
           }}
         ></NextSeo>
+      {isDesktop && (
+        <MusicPlayerProvider>
+          <MusicPlayer>
+            <Component {...pageProps}/>
+          </MusicPlayer>
+        </MusicPlayerProvider>
+      )}
+      {!isDesktop && (
         <Component {...pageProps}/>
-        </MusicPlayer>
-      </MusicPlayerProvider>
+      )}
     </>
   )
 }
