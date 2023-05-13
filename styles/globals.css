@@ -123,6 +123,13 @@ a {
   src: url("/fonts/DigitalNumbers-Regular.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Syne Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/SyneMono-Regular.ttf") format("truetype");
+}
+
 a:focus {
   outline: initial;
 }

@@ -7,7 +7,7 @@ export default function Gallery() {
   const [boxList, setBoxList] = useState<number[]>([]);
   const [allMates, setAllMates] = useState<number[]>([]);
   const observerRef = useRef<HTMLDivElement>(null);
-  const [filters, setFilters] = useState<{ key: string; value: string }[]>([]);
+  const [filters, setFilters] = useState<{ [key: string]: string }>({});
   const [mateParts, setMateParts] = useState<{ key: string; value: string[] }[]>([]);
 
   const fetchData = async () => {
@@ -38,21 +38,17 @@ export default function Gallery() {
 
   const applyFilter = (mates, filters) => {
     const filteredMates = mates.filter((mate:any) => {
-      for (const filter of filters) {
-        if (mate.properties[filter.key] !== filter.value) {
-          return false; // 해당 mate가 필터를 만족하지 못하면 false를 반환합니다.
+      for (const [key, value] of Object.entries(filters)) {
+        if (value === key) continue; // 제목 옵션을 선택했을 때 필터링을 적용하지 않습니다.
+        if (mate.properties[key] !== value && (value !== "None" || mate.properties[key] !== undefined)) {
+          return false;
         }
       }
-      return true; // 모든 필터를 만족시킨 mate만 true를 반환합니다.
+      return true;
     });
-  
+
     const filteredMateIds = filteredMates.map((mate:any) => mate.tokenId);
     return filteredMateIds;
-  }
-  
-  const resetFilters = () => {
-    setFilters([]);
-    fetchData();
   }
 
   const fetchBoxList = async () => {
@@ -70,12 +66,25 @@ export default function Gallery() {
     fetchData();
   }, [filters]);
 
-  const handleFilterChange = (selectedOption: any, action: any) => {
-    setFilters([{ key: action.name, value: selectedOption.value }]);
+  const handleFilterChange = (option: any, action: any) => {
+    const newFilters = { ...filters };
+    if (option) {
+      newFilters[action.name] = option.value;
+    } else {
+      delete newFilters[action.name];
+    }
+    setFilters(newFilters);
   };
 
-  const generateOptions = (values: string[]) => {
-    return values.map(value => ({ value: value, label: value }));
+  const generateOptions = (values: string[], key: string) => {
+    return [
+      { value: key, label: key, isNotFirst: false }, 
+      ...values.map((value, index) => ({
+        value: value,
+        label: value,
+        isNotFirst: true
+      }))
+    ];
   };
 
   return (
@@ -88,11 +97,46 @@ export default function Gallery() {
           <div>
             {mateParts.map((part, index) => (
               <div key={index}>
-                <h2>{part.key}</h2>
                 <Select 
                   name={part.key} 
-                  options={generateOptions(part.value)} 
+                  options={generateOptions(part.value, part.key)} 
                   onChange={handleFilterChange}
+                  defaultValue={generateOptions(part.value, part.key)[0]}
+                  closeMenuOnSelect={false}
+                  styles={{
+                    valueContainer: (base) => ({
+                      ...base,
+                      backgroundColor: "#e73c83",
+                      width: '100%',
+                    }),
+                    container: (base) => ({
+                      ...base,
+                      backgroundColor: "#e73c83",
+                      padding: 6,
+                    }),
+                    control: (base) => ({
+                      ...base,
+                      backgroundColor: "#e73c83",
+                      fontFamily: "Syne Mono",
+                      fontSize: "16px",
+                    }),
+                    menu: (base) => ({
+                      ...base,
+                      backgroundColor: "#733ce7",
+                      fontFamily: "Syne Mono",
+                      fontSize: "16px",
+                    }),
+                    option: (provided, state) => ({
+                      ...provided,
+                      color: state.data.isNotFirst ? '#f7d602' : provided.color,
+                      height: "24px",
+                      padding: "2px 12px",  // padding도 조절해 보세요.
+                    }),
+                    singleValue: (provided, state) => ({
+                      ...provided,
+                      color: state.data.isNotFirst ? '#f7d602' : provided.color,
+                    }),
+                  }}
                 />
               </div>
             ))}
@@ -104,11 +148,11 @@ export default function Gallery() {
           </div>
           <div id="galleryContents" style={{ overflow:"scroll", height: "60vh", display: "flex", flexWrap: "wrap" }}>
             {boxList.map(box => (
-              <li key={box} className="box" style={{ flexDirection: "column", width: "16.6666%" }}>
-                <img src={"https://storage.googleapis.com/dsc-mate/336/dscMate-"+box+".png"} alt="" style={{ width: "100px", borderRadius: "10px" }} ref={observerRef}/>
-                <span style={{ fontSize: "15px" }}>DSC Mate #{box}</span>
-              </li>
-            ))}
+    <li key={box} className="box" style={{ flexDirection: "column", width: "16.6666%" }}>
+        <img src={"https://storage.googleapis.com/dsc-mate/336/dscMate-"+box+".png"} alt="" style={{ width: "100px", borderRadius: "10px" }}  ref={observerRef}/>
+        <span style={{ fontSize: "15px" }}>MATE #{box}</span>
+    </li>
+  ))}
           </div>
         </div>
       </div>
