@@ -1,124 +1,190 @@
-import { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "@/components/desktop/Layout";
-import useInfiniteScrolling from '@/hooks/useInfiniteScrolling';
+import Select from 'react-select';
+import useInfiniteScrolling from "../../hooks/useInfiniteScrolling";
 
 export default function Gallery() {
-    const [boxList, setBoxList] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 , 12, 13, 14 ,15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]);
-    const [observerRef, setObserverRef] = useState<null | HTMLDivElement>(null);
-    const [filters, setFilters] = useState<{ key: string; value: string }[]>([
-      { key: "Face", value: "Robot" }
-    ]);
-    const mate:number[] = [];
+  const [boxList, setBoxList] = useState<number[]>([]);
+  const [allMates, setAllMates] = useState<number[]>([]);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null); // 이 부분을 수정했습니다.
+  const [filters, setFilters] = useState<{ [key: string]: string }>({});
+  const [mateParts, setMateParts] = useState<{ key: string; value: string[] }[]>([]);
 
-    const fetchData = async () => {
-      try {
-        // `mates.json` 파일에서 데이터를 가져옵니다.
-        const matesRes = await fetch('/data/mates.json');
-        const matesData = await matesRes.json();
-  
-        // `mateParts.json` 파일에서 데이터를 가져옵니다.
-        const matePartsRes = await fetch('/data/mateParts.json');
-        const matePartsData = await matePartsRes.json();
-        const partsData = matePartsData.collection.map((v:any, i:any) => (v));
-        console.log(partsData[0])
-  
-        // `mates.json` 파일과 `mateParts.json` 파일에서 가져온 데이터를 합쳐서 `isData` 상태값에 저장합니다.
-        const data = matesData.collection.map((v:any, i:any) => (mate.push(v.tokenId)));
+  const fetchData = async () => {
+    try {
+      const matesRes = await fetch('/data/mates.json');
+      const matesData = await matesRes.json();
 
-        const filteredMates = matesData.collection.filter((mate:any) => {
-          for (const filter of filters) {
-            if (mate.properties[filter.key] == filter.value) {
-              return false;
-            }
-          }
-          return true;
-        });
+      const matePartsRes = await fetch('/data/mateParts.json');
+      const matePartsData = await matePartsRes.json();
 
-        const filteredMateIds = filteredMates.map((mate:any) => mate.tokenId);
-  
-      } catch (error) {
-        console.error(error);
+      const partsData = [];
+      for (const part of matePartsData.collection) {
+        for (const key in part) {
+          partsData.push({ key: key, value: part[key] });
+        }
       }
-    };
+      setMateParts(partsData);
 
-    function resetFilters() {
-      setFilters([]);
+      const filteredMates = applyFilter(matesData.collection, filters);
+
+      setAllMates(filteredMates);
+
+      setBoxList(filteredMates.slice(0, 50));
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    useEffect(() => {
-      fetchData();
-    }, []);
-    
-    const getBoxList = async (n: number, length: number) => {
-        await new Promise((resolve, reject) => {
-          setTimeout(() => resolve(1), 200);
-        });
+  const applyFilter = (mates: any[], filters: { [key: string]: string }) => {
+    const filteredMates = mates.filter((mate: any) => {
+      for (const [key, value] of Object.entries(filters)) {
+        if (value === key) continue; 
+        if (mate.properties[key] !== value && (value !== "None" || mate.properties[key] !== undefined)) {
+          return false;
+        }
+      }
+      return true;
+    });
 
-        return Array(n)
-          .fill(null)
-          .map((v, i) => i + length);
-      };
+    const filteredMateIds = filteredMates.map((mate: any) => mate.tokenId);
+    return filteredMateIds;
+  }
 
-    const fetchBoxList = useCallback(async () => {
-    
-        const fetchedBoxList = await getBoxList(3, boxList.length);
-    
-        setBoxList((prev) => [...prev, ...fetchedBoxList]);
-    
-      }, [boxList]);
+  const fetchBoxList = async () => {
+    const nextMates = allMates.slice(boxList.length, boxList.length + 50);
+    setBoxList(prev => [...prev, ...nextMates]);
+  };
 
-      useInfiniteScrolling({
-        observerRef,
-        fetchMore: fetchBoxList,
-        hasMore: boxList.length < 9999,
-      });
+  useInfiniteScrolling({
+    target: loadMoreRef, // 이 부분을 수정했습니다.
+    fetchMore: fetchBoxList,
+    hasMore: boxList.length < allMates.length,
+  });
 
-    return (
-        <>
-        <Layout>
-          <div style={{ display: "flex" }}>
-              <div style={{ width: "20%", background: "#E73C83" }}>
-                <div style={{ display: "flex", height: "15vh" }}>
-                  <img src="/desktop/gallery/gallery.webp" alt="" style={{ width: "100%" }}/>
-                </div>
+  useEffect(() => {
+    fetchData();
+  }, [filters]);
+
+  const handleFilterChange = (option: any, action: any) => {
+    const newFilters = { ...filters };
+    if (option) {
+      newFilters[action.name] = option.value;
+    } else {
+      delete newFilters[action.name];
+    }
+    setFilters(newFilters);
+  };
+
+  const generateOptions = (values: string[], key: string) => {
+    return [
+      { value: key, label: key, isNotFirst: false }, 
+      ...values.map((value, index) => ({
+        value: value,
+        label: value,
+        isNotFirst: true
+      }))
+    ];
+  };
+
+  return (
+    <Layout>
+      <div style={{ display: "flex" }}>
+        <div id="galleryController" style={{ width: "20%", background: "#E73C83" }}>
+          <div style={{ display: "flex", height: "15vh" }}>
+            <img src="/desktop/gallery/gallery.webp" alt="" style={{ width: "100%" }}/>
+          </div>
+          <div>
+            {mateParts.map((part, index) => (
+              <div key={index}>
+                <Select 
+                  name={part.key} 
+                  options={generateOptions(part.value, part.key)} 
+                  onChange={handleFilterChange}
+                  defaultValue={generateOptions(part.value, part.key)[0]}
+                  closeMenuOnSelect={false}
+                  styles={{
+                    valueContainer: (base) => ({
+                      ...base,
+                      backgroundColor: "#e73c83",
+                      width: '100%',
+                    }),
+                    container: (base) => ({
+                      ...base,
+                      backgroundColor: "#e73c83",
+                      padding: 3,
+                    }),
+                    control: (base) => ({
+                      ...base,
+                      backgroundColor: "#e73c83",
+                      fontFamily: "Syne Mono",
+                      fontSize: "16px",
+                    }),
+                    menu: (base) => ({
+                      ...base,
+                      backgroundColor: "#733ce7",
+                      fontFamily: "Syne Mono",
+                      fontSize: "16px",
+                    }),
+                    option: (provided, state) => ({
+                      ...provided,
+                      color: state.data.isNotFirst ? '#f7d602' : provided.color,
+                      height: "24px",
+                      padding: "2px 12px",  // padding도 조절해 보세요.
+                    }),
+                    singleValue: (provided, state) => ({
+                      ...provided,
+                      color: state.data.isNotFirst ? '#f7d602' : provided.color,
+                    }),
+                  }}
+                />
               </div>
-              <div style={{ width: "80%" }}>
-                <div style={{ display: "flex", height: "30vh" }}>
-                    <img src="/desktop/faq/pray_for_dsc.webp" alt="" style={{ width: "100%" }}/>
-                </div>
-                <div style={{ overflow:"scroll", height: "60vh", display: "flex", flexWrap: "wrap" }}>
-                    {boxList.map((box) => (
-                        <>
-                          <li key={box} className="box" style={{ flexDirection: "column", width: "16.6666%" }}>
-                            <img src={"https://storage.googleapis.com/dsc-mate/336/dscMate-"+box+".png"} alt="" style={{ width: "100px", borderRadius: "10px" }}  ref={setObserverRef}/>
-                            <span style={{ fontSize: "15px" }}>DSC Mate #{box}</span>
-                          </li>
-                        </>
-                    ))}
-                </div>
-              </div>
-            </div>
-        </Layout>
-        <style jsx>{`
-            li {
-              list-style: none;
-            }
+            ))}
+          </div>
+        </div>
+        <div style={{ width: "80%" }}>
+          <div style={{ display: "flex", height: "30vh" }}>
+            <img src="/desktop/faq/pray_for_dsc.webp" alt="" style={{ width: "100%" }}/>
+          </div>
+          <div id="galleryContents" style={{ 
+              overflow:"scroll", 
+              height: "60vh", 
+              display: "flex", 
+              flexWrap: "wrap", 
+              justifyContent: "center",  
+              backgroundColor: "#f7d602"  // 이 부분을 추가하세요.
+          }}>
+            {boxList.map(box => (
+              <li key={box} className="box" style={{ flexDirection: "column"}}>
+                <a href={`https://opensea.io/assets/klaytn/0xe47e90c58f8336a2f24bcd9bcb530e2e02e1e8ae/${box}`} target="_blank" rel="noopener noreferrer">
+                  <img src={`https://storage.googleapis.com/dsc-mate/336/dscMate-${box}.png`} alt="" style={{ width: "100px"}}/>
+                </a>
+                {/* <span style={{ fontSize: "15px" }}>MATE #{box}</span> */}
+              </li>
+            ))}
+            <div ref={loadMoreRef} /> {/* This is the loading trigger */}
+          </div>
+        </div>
+      </div>
+      <style jsx>{`
+        li {
+            list-style: none;
+        }
 
-            .container {
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              align-items: center;
-            }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
-            .box {
-              margin-top: 20px;
-
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            }
-        `}</style>
-        </>
-    );
+        .box {
+            margin-top: -0.4%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+      `}</style>
+    </Layout>
+  );
 }
