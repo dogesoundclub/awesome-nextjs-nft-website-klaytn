@@ -36,10 +36,10 @@ export default function Gallery() {
     }
   };
 
-  const applyFilter = (mates, filters) => {
-    const filteredMates = mates.filter((mate:any) => {
+  const applyFilter = (mates: any[], filters) => {
+    const filteredMates = mates.filter((mate: any) => {
       for (const [key, value] of Object.entries(filters)) {
-        if (value === key) continue; // 제목 옵션을 선택했을 때 필터링을 적용하지 않습니다.
+        if (value === key) continue; 
         if (mate.properties[key] !== value && (value !== "None" || mate.properties[key] !== undefined)) {
           return false;
         }
@@ -47,7 +47,7 @@ export default function Gallery() {
       return true;
     });
 
-    const filteredMateIds = filteredMates.map((mate:any) => mate.tokenId);
+    const filteredMateIds = filteredMates.map((mate: any) => mate.tokenId);
     return filteredMateIds;
   }
 
