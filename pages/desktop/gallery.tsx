@@ -1,124 +1,136 @@
-import { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "@/components/desktop/Layout";
-import useInfiniteScrolling from '@/hooks/useInfiniteScrolling';
+import Select from 'react-select';
+import useInfiniteScrolling from "../../hooks/useInfiniteScrolling";
 
 export default function Gallery() {
-    const [boxList, setBoxList] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 , 12, 13, 14 ,15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]);
-    const [observerRef, setObserverRef] = useState<null | HTMLDivElement>(null);
-    const [filters, setFilters] = useState<{ key: string; value: string }[]>([
-      { key: "Face", value: "Robot" }
-    ]);
-    const mate:number[] = [];
+  const [boxList, setBoxList] = useState<number[]>([]);
+  const [allMates, setAllMates] = useState<number[]>([]);
+  const observerRef = useRef<HTMLDivElement>(null);
+  const [filters, setFilters] = useState<{ key: string; value: string }[]>([]);
+  const [mateParts, setMateParts] = useState<{ key: string; value: string[] }[]>([]);
 
-    const fetchData = async () => {
-      try {
-        // `mates.json` 파일에서 데이터를 가져옵니다.
-        const matesRes = await fetch('/data/mates.json');
-        const matesData = await matesRes.json();
-  
-        // `mateParts.json` 파일에서 데이터를 가져옵니다.
-        const matePartsRes = await fetch('/data/mateParts.json');
-        const matePartsData = await matePartsRes.json();
-        const partsData = matePartsData.collection.map((v:any, i:any) => (v));
-        console.log(partsData[0])
-  
-        // `mates.json` 파일과 `mateParts.json` 파일에서 가져온 데이터를 합쳐서 `isData` 상태값에 저장합니다.
-        const data = matesData.collection.map((v:any, i:any) => (mate.push(v.tokenId)));
+  const fetchData = async () => {
+    try {
+      const matesRes = await fetch('/data/mates.json');
+      const matesData = await matesRes.json();
 
-        const filteredMates = matesData.collection.filter((mate:any) => {
-          for (const filter of filters) {
-            if (mate.properties[filter.key] == filter.value) {
-              return false;
-            }
-          }
-          return true;
-        });
+      const matePartsRes = await fetch('/data/mateParts.json');
+      const matePartsData = await matePartsRes.json();
 
-        const filteredMateIds = filteredMates.map((mate:any) => mate.tokenId);
-  
-      } catch (error) {
-        console.error(error);
+      const partsData = [];
+      for (const part of matePartsData.collection) {
+        for (const key in part) {
+          partsData.push({ key: key, value: part[key] });
+        }
       }
-    };
+      setMateParts(partsData);
 
-    function resetFilters() {
-      setFilters([]);
+      const filteredMates = applyFilter(matesData.collection, filters);
+
+      setAllMates(filteredMates);
+
+      setBoxList(filteredMates.slice(0, 50));
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    useEffect(() => {
-      fetchData();
-    }, []);
-    
-    const getBoxList = async (n: number, length: number) => {
-        await new Promise((resolve, reject) => {
-          setTimeout(() => resolve(1), 200);
-        });
+  const applyFilter = (mates, filters) => {
+    const filteredMates = mates.filter((mate:any) => {
+      for (const filter of filters) {
+        if (mate.properties[filter.key] !== filter.value) {
+          return false; // 해당 mate가 필터를 만족하지 못하면 false를 반환합니다.
+        }
+      }
+      return true; // 모든 필터를 만족시킨 mate만 true를 반환합니다.
+    });
+  
+    const filteredMateIds = filteredMates.map((mate:any) => mate.tokenId);
+    return filteredMateIds;
+  }
+  
+  const resetFilters = () => {
+    setFilters([]);
+    fetchData();
+  }
 
-        return Array(n)
-          .fill(null)
-          .map((v, i) => i + length);
-      };
+  const fetchBoxList = async () => {
+    const nextMates = allMates.slice(boxList.length, boxList.length + 50);
+    setBoxList(prev => [...prev, ...nextMates]);
+  };
 
-    const fetchBoxList = useCallback(async () => {
-    
-        const fetchedBoxList = await getBoxList(3, boxList.length);
-    
-        setBoxList((prev) => [...prev, ...fetchedBoxList]);
-    
-      }, [boxList]);
+  useInfiniteScrolling({
+    observerRef: observerRef.current,
+    fetchMore: fetchBoxList,
+    hasMore: boxList.length < allMates.length,
+  });
 
-      useInfiniteScrolling({
-        observerRef,
-        fetchMore: fetchBoxList,
-        hasMore: boxList.length < 9999,
-      });
+  useEffect(() => {
+    fetchData();
+  }, [filters]);
 
-    return (
-        <>
-        <Layout>
-          <div style={{ display: "flex" }}>
-              <div style={{ width: "20%", background: "#E73C83" }}>
-                <div style={{ display: "flex", height: "15vh" }}>
-                  <img src="/desktop/gallery/gallery.webp" alt="" style={{ width: "100%" }}/>
-                </div>
+  const handleFilterChange = (selectedOption: any, action: any) => {
+    setFilters([{ key: action.name, value: selectedOption.value }]);
+  };
+
+  const generateOptions = (values: string[]) => {
+    return values.map(value => ({ value: value, label: value }));
+  };
+
+  return (
+    <Layout>
+      <div style={{ display: "flex" }}>
+        <div id="galleryController" style={{ width: "20%", background: "#E73C83" }}>
+          <div style={{ display: "flex", height: "15vh" }}>
+            <img src="/desktop/gallery/gallery.webp" alt="" style={{ width: "100%" }}/>
+          </div>
+          <div>
+            {mateParts.map((part, index) => (
+              <div key={index}>
+                <h2>{part.key}</h2>
+                <Select 
+                  name={part.key} 
+                  options={generateOptions(part.value)} 
+                  onChange={handleFilterChange}
+                />
               </div>
-              <div style={{ width: "80%" }}>
-                <div style={{ display: "flex", height: "30vh" }}>
-                    <img src="/desktop/faq/pray_for_dsc.webp" alt="" style={{ width: "100%" }}/>
-                </div>
-                <div style={{ overflow:"scroll", height: "60vh", display: "flex", flexWrap: "wrap" }}>
-                    {boxList.map((box) => (
-                        <>
-                          <li key={box} className="box" style={{ flexDirection: "column", width: "16.6666%" }}>
-                            <img src={"https://storage.googleapis.com/dsc-mate/336/dscMate-"+box+".png"} alt="" style={{ width: "100px", borderRadius: "10px" }}  ref={setObserverRef}/>
-                            <span style={{ fontSize: "15px" }}>DSC Mate #{box}</span>
-                          </li>
-                        </>
-                    ))}
-                </div>
-              </div>
-            </div>
-        </Layout>
-        <style jsx>{`
-            li {
-              list-style: none;
-            }
+            ))}
+          </div>
+        </div>
+        <div style={{ width: "80%" }}>
+          <div style={{ display: "flex", height: "30vh" }}>
+            <img src="/desktop/faq/pray_for_dsc.webp" alt="" style={{ width: "100%" }}/>
+          </div>
+          <div id="galleryContents" style={{ overflow:"scroll", height: "60vh", display: "flex", flexWrap: "wrap" }}>
+            {boxList.map(box => (
+              <li key={box} className="box" style={{ flexDirection: "column", width: "16.6666%" }}>
+                <img src={"https://storage.googleapis.com/dsc-mate/336/dscMate-"+box+".png"} alt="" style={{ width: "100px", borderRadius: "10px" }} ref={observerRef}/>
+                <span style={{ fontSize: "15px" }}>DSC Mate #{box}</span>
+              </li>
+            ))}
+          </div>
+        </div>
+      </div>
+      <style jsx>{`
+        li {
+            list-style: none;
+        }
 
-            .container {
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              align-items: center;
-            }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
-            .box {
-              margin-top: 20px;
-
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            }
-        `}</style>
-        </>
-    );
+        .box {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+      `}</style>
+    </Layout>
+  );
 }

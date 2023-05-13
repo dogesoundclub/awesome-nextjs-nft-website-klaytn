@@ -24,7 +24,6 @@ export default function Layout({ children }: LayoutProps){
         </div>
       </div>
       <WidgetBotCrate server="872113947166249041" channel="1056835060113866752" />
-
     </div>
 
   );
