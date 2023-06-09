@@ -94,6 +94,11 @@ export default function Gallery() {
           <div style={{ display: "flex", height: "15vh" }}>
             <img src="/desktop/gallery/gallery.webp" alt="" style={{ width: "100%" }}/>
           </div>
+          <div style={{ display: "flex" }}>
+            <a style={{ width: "33.3333%", color: "#000", minWidth: "0px", padding: "0", background: "none", border: "none" }}><img src="/desktop/gallery/btn_mate.webp" style={{ width: "100%" }}/></a>
+            <a style={{ width: "33.3333%", color: "#000", minWidth: "0px", padding: "0" }}><img src="/desktop/gallery/btn_emate.webp" style={{ width: "100%" }}/></a>
+            <a style={{ width: "33.3333%", color: "#000", minWidth: "0px", padding: "0" }}><img src="/desktop/gallery/btn_bmcs.webp" style={{ width: "100%" }}/></a>
+          </div>
           <div>
             {mateParts.map((part, index) => (
               <div key={index}>
