@@ -162,7 +162,7 @@ export default function Gallery() {
             {boxList.map(box => (
               <li key={box} className="box" style={{ flexDirection: "column"}}>
                 <a href={`https://opensea.io/assets/klaytn/0xe47e90c58f8336a2f24bcd9bcb530e2e02e1e8ae/${box}`} target="_blank" rel="noopener noreferrer">
-                  <img src={`https://storage.googleapis.com/dsc-mate/336/dscMate-${box}.png`} alt="" style={{ width: "100px"}}/>
+                  <img src={`https://api.dogesound.club/mate/images/dscMate-${box}.png`} alt="" style={{ width: "100px"}}/>
                 </a>
                 {/* <span style={{ fontSize: "15px" }}>MATE #{box}</span> */}
               </li>
