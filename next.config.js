@@ -4,15 +4,12 @@ const withPWA = require('next-pwa');
 const withTM = require("next-transpile-modules")(["hashconnect"]);
 
 const nextConfig = {
-  // reactStrictMode: true,
   reactStrictMode: false,
-  webpack5: true,
   webpack: (config) => {
     config.resolve.fallback = { fs: false };
     return config;
   },
 };
-
 
 module.exports = withPlugins(
   [
@@ -24,6 +21,7 @@ module.exports = withPlugins(
         },
       },
     ],
+    withTM
   ],
-  withTM(nextConfig)
-)
+  nextConfig
+);

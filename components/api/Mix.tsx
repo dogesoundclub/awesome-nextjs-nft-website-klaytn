@@ -5,7 +5,7 @@ export default function Mix() {
 
     async function getData(){
         try {
-            const res = await fetch("https://api.dogesound.club/mix/price");
+            const res = await fetch("/api/mixPrice");
             const data = await res.json();
             setData(data);
         } catch (error) {

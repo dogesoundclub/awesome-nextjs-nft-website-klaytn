@@ -16,12 +16,13 @@ export default function Left() {
             <div style={{ display: "flex", justifyContent: "flex-end", padding: "5px" }}>
                 <a href="https://opensea.io/collection/dsc-dogesound-winners" target="_blank" style={{ fontFamily: "Yantramanav", color: "#54A5F0", fontSize: "15px" }}>&gt;&gt;&gt; see more</a>
             </div>
-            <div style={{ display: "flex", padding: "5px" }}>
+            <div style={{ display: "flex", padding: "5px", width: "100%"}}>
                 <Image 
                     src="/desktop/layout/left/LeftBanner.webp"
                     alt=""
-                    width="793"
-                    height="934"
+                    layout="responsive"
+                    width={793}
+                    height={934}
                 />
             </div>
             {/* <div style={{ display: "flex", padding: "5px" }}>

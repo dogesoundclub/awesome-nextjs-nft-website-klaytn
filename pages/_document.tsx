@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <meta charSet="utf-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="keywords" content="DogeSoundClub, DSC, PFP, NFT, Mates, Emates, BMCS, Mix"/>
         <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png"/>
         <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png"/>
