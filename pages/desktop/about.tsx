@@ -44,7 +44,7 @@ export default function About() {
                         >
                             <img src="/logo/opensea.webp" alt="" style={{ width: "32px" }}/>
                         </a>
-                        <a href="https://discord.gg/dogesoundclub" target="_blank">
+                        <a href="https://discord.gg/79CqdTdu8w" target="_blank">
                             <img src="/logo/discord.webp" alt="" style={{ width: "32px" }}/>
                         </a>
                         <a

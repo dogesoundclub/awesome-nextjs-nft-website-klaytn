@@ -42,7 +42,7 @@ export default function Right() {
                     </> : <img src="/desktop/layout/right/login.png" alt="" style={{ width: "100%" }} onClick={ WalletShow }/>
                     }
                     <div style={{ display: "flex", justifyContent: "center", padding: "5px" }}>
-                        <a href="https://discord.com/invite/dogesoundclub" target="_blank"><img src="/desktop/layout/right/banner1.webp" alt="" style={{ width: "100%" }} /></a>
+                        <a href="https://discord.com/invite/79CqdTdu8w" target="_blank"><img src="/desktop/layout/right/banner1.webp" alt="" style={{ width: "100%" }} /></a>
                     </div>
                     <div style={{ display: "flex", justifyContent: "center", padding: "5px" }}>
                         <a href="https://opensea.io/collection/portal-engine" target="_blank">

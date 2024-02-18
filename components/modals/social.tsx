@@ -25,7 +25,7 @@ export default function SocialPage() {
                 </div>
                 <div className="window-body">
                     <section className="field-row" style={{ justifyContent: "center" }}>
-                        <a href="https://discord.gg/dogesoundclub" target="_blank"><img src="/logo/discord.webp" alt="" style={{ width: "32px" }}/></a>
+                        <a href="https://discord.gg/79CqdTdu8w" target="_blank"><img src="/logo/discord.webp" alt="" style={{ width: "32px" }}/></a>
                     </section>
                     <section className="field-row" style={{ justifyContent: "center" }}>
                         <a href="https://www.instagram.com/dogesoundclub/" target="_blank"><img src="/logo/instagram.webp" alt="" style={{ width: "32px" }}/></a>
