@@ -46,7 +46,7 @@ export default function SocialPage() {
                         <a href="https://github.com/dogesoundclub" target="_blank"><img src="/logo/git.webp" alt="" style={{ width: "32px" }}/></a>
                     </section>
                     <section className="field-row" style={{ justifyContent: "center" }}>
-                        <a href="https://opensea.io/collection/dogesoundclub-mates" target="_blank"><img src="/logo/opensea.webp" alt="" style={{ width: "32px" }}/></a>
+                        <a href="https://pro.x2y2.io/klaytn/collection/doge-sound-club" target="_blank"><img src="/logo/opensea.webp" alt="" style={{ width: "32px" }}/></a>
                     </section>
                 </div>
             </div>

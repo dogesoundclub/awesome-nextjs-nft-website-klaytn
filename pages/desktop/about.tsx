@@ -39,7 +39,7 @@ export default function About() {
                             <img src="/logo/git.webp" alt="" style={{ width: "32px" }}/>
                         </a>
                         <a
-                            href="https://opensea.io/collection/dogesoundclub-mates"
+                            href="https://pro.x2y2.io/klaytn/collection/doge-sound-club"
                             target="_blank"
                         >
                             <img src="/logo/opensea.webp" alt="" style={{ width: "32px" }}/>
