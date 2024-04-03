@@ -1,6 +1,8 @@
 import React, { ReactNode, useEffect, useRef } from 'react';
 import { useMusicPlayerState, useMusicPlayerDispatch } from '../../context/MusicPlayerContext';
 
+import ConnectButton from '../../components/shared/ConnectButton';
+
 interface MusicPlayerProps {
   children: ReactNode;
 }
@@ -78,8 +80,11 @@ const MusicPlayer = ({ children }: MusicPlayerProps) => {
           <a href="https://www.youtube.com/watch?v=pSqzpokGoug" target="_blank" rel="noopener noreferrer" style={{color: 'blue', textDecoration: 'underline'}}>
               <p>Lil 9ap x NOWIMYOUNG x SUDO - BEAM!</p>
             </a>
-          </div>
+          </div>  
+          <ConnectButton />
         </div>
+     
+
       </nav>
       <style jsx>{`
         * {
@@ -90,7 +95,7 @@ const MusicPlayer = ({ children }: MusicPlayerProps) => {
           background-color: #101010;
       }
       #wrapper_ea{
-          max-width: auto;
+          max-width: full;
           margin: 0px;
       }
       #navbar_ea {
