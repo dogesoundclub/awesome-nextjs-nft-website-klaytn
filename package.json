@@ -11,7 +11,6 @@
   "dependencies": {
     "@hashgraph/sdk": "^2.24.1",
     "@tanstack/react-query": "^5.28.14",
-    "@thirdweb-dev/react": "^4.4.30",
     "@types/node": "18.15.12",
     "@types/qrcode": "^1.5.0",
     "@types/react": "18.0.28",
@@ -42,5 +41,10 @@
     "wagmi": "^2.5.2",
     "xp.css": "^0.2.6",
     "zustand": "^4.3.6"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.3",
+    "autoprefixer": "^10.0.1",
+    "postcss": "^8"
   }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 
 const ConnectButton = () => {
   return (
-    <div>
+    <div id="connectButton">
       <w3m-button />
     </div>
   );

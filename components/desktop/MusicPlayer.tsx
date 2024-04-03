@@ -55,7 +55,7 @@ const MusicPlayer = ({ children }: MusicPlayerProps) => {
   }, []);
 
   return (
-    <div id="wrapper_ea" tabIndex={0} style={{position: 'fixed', width: '100%', zIndex: 1000}}>
+    <div tabIndex={0} >
       <audio 
         ref={audioRef} 
         id="mytrack" 

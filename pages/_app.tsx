@@ -1,5 +1,5 @@
+import "../styles/globals.css";
 import "xp.css/dist/XP.css";
-import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { NextSeo } from "next-seo";
 import MusicPlayer from '../components/desktop/MusicPlayer';
