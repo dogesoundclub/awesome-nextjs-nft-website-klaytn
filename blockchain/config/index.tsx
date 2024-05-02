@@ -31,3 +31,4 @@ export const wagmiConfig = defaultWagmiConfig({
   enableEIP6963: true, // Optional - true by default
   enableCoinbase: true, // Optional - true by default
 });
+

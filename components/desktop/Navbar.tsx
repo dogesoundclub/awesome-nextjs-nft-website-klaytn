@@ -1,6 +1,5 @@
-// Navbar.tsx:
 import Link from 'next/link'
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const navigation = [
     { name: "about", href: "/about" },
@@ -12,18 +11,17 @@ const navigation = [
 ];
 
 export default function Navbar(){
-    
     const router = useRouter();
 
     return (
         <>
-        <nav>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "10vh", padding: "10px", background: "linear-gradient(180deg,#646464 30%,#ffffff88 50%,#646464 70%)" }}>
-                <Link href="/"><img src="/logo.webp" alt="dogesoundclub_logo" style={{ height: "10vh" }}/></Link>
-                <div style={{ width: "50%"}}>
-                    <ul style={{ display: "flex", justifyContent: "flex-end", listStyle: "none", fontSize: "20px", fontFamily: "Audiowide", fontWeight: "bold" }}>
+        <nav className="bg-gradient-to-b">
+            <div className="flex justify-between items-center h-full">
+                <Link href="/"><img src="/logo.webp" alt="dogesoundclub_logo" className="h-full"/></Link>
+                <div className="w-1/2">
+                    <ul className="flex justify-end list-none text-2xl font-bold font-audiowide">
                         {navigation.map((item) => (
-                            <li key={item.name} style={{ padding: "10px", textShadow: "-1px 1px #000, 1px 1px #000, 1px 1px #000, 1px -1px #000" }}>
+                            <li key={item.name} className="p-2.5 text-shadow">
                                 <Link href={item.href}>{item.name}</Link>
                             </li>
                         ))}
@@ -31,8 +29,11 @@ export default function Navbar(){
                 </div>
             </div>
         </nav>
-        <style jsx>{`
-            a:hover{
+        <style jsx global>{`
+            .text-shadow {
+                text-shadow: -1px 1px #000, 1px 1px #000, 1px 1px #000, 1px -1px #000;
+            }
+            a:hover {
                 text-shadow: 3px -1px 1px black, 1px 1px black, 1px 1px black, 1px -1px black;
             }
         `}</style>

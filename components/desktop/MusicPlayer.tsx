@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useRef } from 'react';
 import { useMusicPlayerState, useMusicPlayerDispatch } from '../../context/MusicPlayerContext';
 
-import ConnectButton from '../../components/shared/ConnectButton';
+import ConnectButton from '../shared/ConnectButton';
 
 interface MusicPlayerProps {
   children: ReactNode;
